@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>空き家×学生 診断</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <h1>あなたにぴったりの空き家タイプ診断</h1>
+
+  <form id="quizForm">
+    <div class="question">
+      <p>Q1. 休日は何をして過ごす？</p>
+      <label><input type="radio" name="q1" value="iyashi" /> 公園でのんびり</label><br>
+      <label><input type="radio" name="q1" value="urban" /> カフェ巡り</label><br>
+      <label><input type="radio" name="q1" value="diy" /> 家でDIY</label>
+    </div>
+
+    <div class="question">
+      <p>Q2. 空き家でやってみたいことは？</p>
+      <label><input type="radio" name="q2" value="connect" /> 地域の人と交流</label><br>
+      <label><input type="radio" name="q2" value="iyashi" /> 静かに暮らす</label><br>
+      <label><input type="radio" name="q2" value="diy" /> 自分好みに改造</label>
+    </div>
+
+    <div class="question">
+      <p>Q3. 好きな住まいの雰囲気は？</p>
+      <label><input type="radio" name="q3" value="urban" /> モダンでおしゃれ</label><br>
+      <label><input type="radio" name="q3" value="iyashi" /> 緑が多くて静か</label><br>
+      <label><input type="radio" name="q3" value="diy" /> 味のある古民家</label>
+    </div>
+
+    <div class="question">
+      <p>Q4. どんな人と住みたい？</p>
+      <label><input type="radio" name="q4" value="connect" /> 地域の人たちと</label><br>
+      <label><input type="radio" name="q4" value="iyashi" /> 一人でのんびり</label><br>
+     <label><input type="radio" name="q4" value="urban" /> 気の合う仲間と</label>
+    </div>
+
+    <div class="question">
+      <p>Q5. あなたのこだわりは？</p>
+      <label><input type="radio" name="q5" value="diy" /> 自分で作り変えたい</label><br>
+      <label><input type="radio" name="q5" value="urban" /> 交通アクセスが第一</label><br>
+      <label><input type="radio" name="q5" value="connect" /> ご近所とのつながり</label>
+    </div>
+
+    <button type="submit">診断する</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const resultData = {
+      iyashi: {
+        name: "緑の癒し系ハウス派🌿",
+        message: "静かな場所でのんびり過ごせる空き家がぴったり！"
+      },
+      urban: {
+        name: "アクセス重視！都会派🚉",
+        message: "駅近・便利なエリアで自分らしく暮らしたいあなたに！"
+      },
+      diy: {
+        name: "改造こそロマン派🔨",
+        message: "築古物件を自分色に染めて暮らすのが似合ってます！"
+      },
+      connect: {
+        name: "ご近所コミュニティ派🏡",
+        message: "人とのつながりを大事にするあなたには、交流できる空き家がぴったり！"
+      }
+    };
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = new FormData(this);
+      const score = { iyashi: 0, urban: 0, diy: 0, connect: 0 };
+
+      for (let [_, value] of form.entries()) {
+        score[value]++;
+      }
+
+      let bestType = "iyashi";
+      let max = 0;
+      for (let type in score) {
+        if (score[type] > max) {
+          max = score[type];
+          bestType = type;
+        }
+      }
+
+      const result = resultData[bestType];
+      document.getElementById("result").innerHTML =
+        `<h2>${result.name}</h2><p>${result.message}</p>`;
+    });
+  </script>
+</body>
+</html>
